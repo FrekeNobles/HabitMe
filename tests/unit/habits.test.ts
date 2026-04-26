@@ -48,7 +48,7 @@ describe('toggleHabitCompletion', () => {
 
     // Result should have the new completion
     expect(result.completions.length).toBe(1);
-    
+
     // They should be different objects
     expect(result).not.toBe(original);
   });
@@ -68,7 +68,7 @@ describe('toggleHabitCompletion', () => {
     const uniqueDates = Array.from(new Set(result.completions));
     expect(result.completions.length).toBe(uniqueDates.length);
     
-    // Should only have date2 left
+    // Should only have date2 
     expect(result.completions).toEqual([date2]);
   });
 });
