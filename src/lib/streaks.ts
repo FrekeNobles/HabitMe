@@ -1,19 +1,4 @@
-/**
- * Calculates the current streak for a habit
- * Per TRD Section 9:
- * - completions contains YYYY-MM-DD strings
- * - remove duplicates before calculating
- * - sort by date before logic
- * - if today is not completed, current streak is 0
- * - if today is completed, count consecutive calendar days backwards from today
- * 
- * Examples:
- * - [] => 0
- * - [today] => 1
- * - [today, yesterday] => 2
- * - [yesterday] => 0
- * - [today, twoDaysAgo] => 1
- */
+
 export function calculateCurrentStreak(
   completions: string[],
   today?: string
