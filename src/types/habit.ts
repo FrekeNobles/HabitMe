@@ -1,3 +1,4 @@
+// habit type
 export type Habit = {
   id: string;
   userId: string;
