@@ -9,6 +9,7 @@ export default function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -74,22 +75,34 @@ export default function LoginForm() {
 
         {/* Password field */}
         <div>
-          <label
-            htmlFor="auth-login-password"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Password
-          </label>
-          <input
-            id="auth-login-password"
-            data-testid="auth-login-password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2.5 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-smooth"
-            placeholder="••••••••"
-            disabled={isLoading}
-          />
+            <label
+                htmlFor="auth-login-password"
+                className="block text-sm font-medium text-gray-700 mb-2"
+            >
+                Password
+            </label>
+
+            <div className="relative">
+                <input
+                  id="auth-login-password"
+                  data-testid="auth-login-password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2.5 pr-10 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-smooth"
+                  placeholder="••••••••"
+                  disabled={isLoading}
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  disabled={isLoading}
+                  className="absolute  right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-400 disabled:opacity-50"
+                  >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+            </div>
         </div>
 
         {/* Submit button */}
