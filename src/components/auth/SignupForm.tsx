@@ -141,7 +141,7 @@ export default function SignupForm() {
 
           <div className="relative">
             <input
-              type={showPassword ? "text" : "password"}
+              type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full px-4 py-2.5 pr-10 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-smooth"
@@ -155,7 +155,7 @@ export default function SignupForm() {
               disabled={isLoading}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-400 disabled:opacity-50"
             >
-              {showPassword ? "Hide" : "Show"}
+              {showConfirmPassword ? "Hide" : "Show"}
             </button>
           </div>
         </div>
