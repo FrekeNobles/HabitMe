@@ -163,14 +163,14 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowDeleteConfirm(false)}
-                className="flex-1 py-2.5 border border-gray-200 text-gray-700 font-medium rounded hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-smooth"
+                className="flex-1 py-2.5 border border-gray-200 text-gray-700 font-medium rounded cursor-pointer hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-smooth"
               >
                 Cancel
               </button>
               <button
                 data-testid="confirm-delete-button"
                 onClick={handleDelete}
-                className="flex-1 py-2.5 bg-red-600 text-white font-medium rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition-smooth"
+                className="flex-1 py-2.5 bg-red-600 text-white font-medium rounded cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition-smooth"
               >
                 Delete
               </button>
