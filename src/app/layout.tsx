@@ -1,6 +1,7 @@
-import type { Metadata, Viewport } from 'next';
+import type { Metadata , Viewport} from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import PWARegister from '@/components/shared/PWARegister';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -10,7 +11,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'HabitMe - Build Better Habits',
-  description: 'A simple habit tracker for building consistent routines',
+  description: 'A minimalist habit tracker for building consistent routines',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
@@ -19,9 +20,9 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  themeColor: '#000000',
-};
+ export const viewport: Viewport = {
+   themeColor: '#000000',
+ };
 
 export default function RootLayout({
   children,
@@ -30,9 +31,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="icon" href="/icons/icon-192.png" />
+        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+      </head>
       <body className="antialiased font-sans min-h-screen">
         {children}
+        <PWARegister />
       </body>
     </html>
   );
 }
+
