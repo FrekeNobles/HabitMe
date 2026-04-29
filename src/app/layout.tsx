@@ -1,7 +1,7 @@
 import type { Metadata , Viewport} from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Script from 'next/script';
+import PWARegister from '@/components/shared/PWARegister';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -39,24 +39,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased font-sans min-h-screen">
         {children}
-        
-        {/* Service Worker Registration */}
-        {/* <Script id="register-sw" strategy="afterInteractive">
-          {`
-            if ('serviceWorker' in navigator) {
-              window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').then(
-                  function(registration) {
-                    console.log('ServiceWorker registration successful');
-                  },
-                  function(err) {
-                    console.log('ServiceWorker registration failed: ', err);
-                  }
-                );
-              });
-            }
-          `}
-        </Script> */}
+        <PWARegister />
       </body>
     </html>
   );

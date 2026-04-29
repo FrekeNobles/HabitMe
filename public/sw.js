@@ -1,72 +1,82 @@
-// Service Worker for Habitme PWA
-// this will cache app shell for offline support
+// Habit Tracker Service Worker
+// Minimal offline support - caches app shell safely
 
-const CACHE_NAME = 'habit-tracker-v1';
-const urlsToCache = [
-  '/',
-  '/login',
-  '/signup',
-  '/dashboard',
-];
+const CACHE_NAME = 'habit-tracker-v2';
 
-// Install event - cache app shell
+// Install - cache only the app shell entry ("/")
 self.addEventListener('install', (event) => {
+  console.log('Service Worker installing...');
+
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('Opened cache');
-      return cache.addAll(urlsToCache);
+      // Cache the root so navigation fallback works
+      return cache.add('/');
     })
   );
+
   self.skipWaiting();
 });
 
-// Fetch event - serve from cache, fallback to network
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      // Cache hit - return response
-      if (response) {
-        return response;
-      }
-
-      // Clone the request
-      const fetchRequest = event.request.clone();
-
-      return fetch(fetchRequest).then((response) => {
-        // Check if valid response
-        if (!response || response.status !== 200 || response.type !== 'basic') {
-          return response;
-        }
-
-        // Clone the response
-        const responseToCache = response.clone();
-
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
-        });
-
-        return response;
-      }).catch(() => {
-        // Network failed, return cached offline page if available
-        return caches.match('/');
-      });
-    })
-  );
-});
-
-// Activate event - clean up old caches
+// Activate - clean old caches
 self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [CACHE_NAME];
+  console.log('Service Worker activating...');
+
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
+        cacheNames
+          .filter((name) => name !== CACHE_NAME)
+          .map((name) => caches.delete(name))
       );
     })
   );
-  self.clients.claim();
+
+  return self.clients.claim();
+});
+
+// Fetch - network first, safe caching, offline fallback
+self.addEventListener('fetch', (event) => {
+  // Skip non-GET requests
+  if (event.request.method !== 'GET') return;
+
+  const request = event.request;
+
+  event.respondWith(
+    fetch(request)
+      .then((response) => {
+        // Only cache static assets (app shell)
+        if (
+          response &&
+          response.status === 200 &&
+          (
+            request.destination === 'script' ||
+            request.destination === 'style' ||
+            request.destination === 'image'
+          )
+        ) {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseClone);
+          });
+        }
+
+        return response;
+      })
+      .catch(() => {
+        // Network failed → try cache
+        return caches.match(request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+
+          // Fallback for page navigation (VERY IMPORTANT)
+          if (request.mode === 'navigate') {
+            return caches.match('/');
+          }
+
+          // Final fallback
+          return new Response('Offline', { status: 503 });
+        });
+      })
+  );
 });
