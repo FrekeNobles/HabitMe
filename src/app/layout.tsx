@@ -41,7 +41,7 @@ export default function RootLayout({
         {children}
         
         {/* Service Worker Registration */}
-        <Script id="register-sw" strategy="afterInteractive">
+        {/* <Script id="register-sw" strategy="afterInteractive">
           {`
             if ('serviceWorker' in navigator) {
               window.addEventListener('load', function() {
@@ -56,7 +56,7 @@ export default function RootLayout({
               });
             }
           `}
-        </Script>
+        </Script> */}
       </body>
     </html>
   );
