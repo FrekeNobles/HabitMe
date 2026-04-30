@@ -143,6 +143,7 @@ export default function SignupForm() {
             <input
               type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
+              data-testid="auth-signup-confirm-password"
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full px-4 py-2.5 pr-10 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-smooth"
               placeholder="••••••••"

@@ -9,7 +9,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    // Show splash screen for 1 second (between 
+    // Show splash screen for 1.8 second (between 
     const timer = setTimeout(() => {
       const session = getSession();
 
@@ -18,7 +18,7 @@ export default function Home() {
       } else {
         router.push('/login');
       }
-    }, 1000);
+    }, 1800);
 
     return () => clearTimeout(timer);
   }, [router]);
