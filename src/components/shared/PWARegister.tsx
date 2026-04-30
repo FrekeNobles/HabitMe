@@ -7,7 +7,7 @@ export default function PWARegister() {
     if (
       typeof window !== 'undefined' &&
       'serviceWorker' in navigator &&
-      process.env.NODE_ENV === 'production'
+      process.env.NODE_ENV !== 'development'
     ) {
       navigator.serviceWorker
         .register('/sw.js')
